@@ -78,9 +78,7 @@ class _ReadBookState extends State<ReadBook> with WidgetsBindingObserver {
     super.dispose();
     await readModel.saveData();
     await readModel.clear();
-    // readModel.pageController?.dispose();
     WidgetsBinding.instance.removeObserver(this);
-    print('dispose');
   }
 
   @override
@@ -88,106 +86,124 @@ class _ReadBookState extends State<ReadBook> with WidgetsBindingObserver {
     readModel.saveData();
   }
 
+  void _onBack() async {
+    if (!Store.value<ShelfModel>(context)
+        .shelf
+        .map((f) => f.Id)
+        .toList()
+        .contains(readModel.book.Id)) {
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content: Text('是否加入本书'),
+          actions: <Widget>[
+            FlatButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Store.value<ShelfModel>(context)
+                      .modifyShelf(this.widget.book);
+                },
+                child: Text('确定')),
+            FlatButton(
+                onPressed: () {
+                  readModel.sSave = false;
+
+                  Store.value<ShelfModel>(context)
+                      .delLocalCache([this.widget.book.Id]);
+                  Navigator.pop(context);
+                },
+                child: Text('取消')),
+          ],
+        ),
+      );
+    } else {
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: () async {
-          if (!Store.value<ShelfModel>(context)
-              .shelf
-              .map((f) => f.Id)
-              .toList()
-              .contains(readModel.book.Id)) {
-            var showDialog2 = await showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                      content: Text('是否加入本书'),
-                      actions: <Widget>[
-                        FlatButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              Store.value<ShelfModel>(context)
-                                  .modifyShelf(this.widget.book);
-                            },
-                            child: Text('确定')),
-                        FlatButton(
-                            onPressed: () {
-                              readModel.sSave = false;
-
-                              Store.value<ShelfModel>(context)
-                                  .delLocalCache([this.widget.book.Id]);
-                              Navigator.pop(context);
-                            },
-                            child: Text('取消')),
-                      ],
-                    ));
-          }
-          return true;
-        },
-        child: Scaffold(
-            key: _globalKey,
-            drawer: Drawer(
-              child: ChapterView(),
-            ),
-            body: Store.connect<ReadModel>(
-                builder: (context, ReadModel model, child) {
-              return (model?.loadOk ?? false)
-                  ? Stack(
-                      children: <Widget>[
-                        Positioned(
-                            left: 0,
-                            top: 0,
-                            right: 0,
-                            bottom: 0,
-                            child: Image.asset(
-                                Store.value<ColorModel>(context).dark
-                                    ? 'images/QR_bg_4.jpg'
-                                    : "images/${bgimg[readModel?.bgIdx ?? 0]}",
-                                fit: BoxFit.cover)),
-                        readModel.isPage
-                            ? PageView.builder(
-                                controller: model.pageController,
-                                physics: AlwaysScrollableScrollPhysics(),
-                                itemBuilder: (BuildContext context, int index) {
-                                  return readModel.allContent[index];
+      onWillPop: () async {
+        _onBack();
+        return false;
+      },
+      child: Scaffold(
+        key: _globalKey,
+        drawer: Drawer(
+          child: ChapterView(),
+        ),
+        body: Store.connect<ReadModel>(
+          builder: (context, ReadModel model, child) {
+            return (model?.loadOk ?? false)
+                ? Stack(
+                    children: <Widget>[
+                      Positioned(
+                          left: 0,
+                          top: 0,
+                          right: 0,
+                          bottom: 0,
+                          child: Image.asset(
+                              Store.value<ColorModel>(context).dark
+                                  ? 'images/QR_bg_4.jpg'
+                                  : "images/${bgimg[readModel?.bgIdx ?? 0]}",
+                              fit: BoxFit.cover)),
+                      readModel.isPage
+                          ? PageView.builder(
+                              controller: model.pageController,
+                              physics: AlwaysScrollableScrollPhysics(),
+                              itemBuilder: (BuildContext context, int index) {
+                                return readModel.allContent[index];
+                              },
+                              //条目个数
+                              itemCount: (readModel
+                                          .prePage?.pageOffsets?.length ??
+                                      0) +
+                                  (readModel.curPage?.pageOffsets?.length ??
+                                      0) +
+                                  (readModel.nextPage?.pageOffsets?.length ??
+                                      0),
+                              onPageChanged: (idx) =>
+                                  readModel.changeChapter(idx),
+                            )
+                          : LayoutBuilder(builder: (context, constraints) {
+                              return NotificationListener(
+                                onNotification: (ScrollNotification note) {
+                                  readModel.checkPosition(
+                                      note.metrics.pixels); // 滚动位置。
+                                  return true;
                                 },
-                                //条目个数
-                                itemCount: (readModel
-                                            .prePage?.pageOffsets?.length ??
-                                        0) +
-                                    (readModel.curPage?.pageOffsets?.length ??
-                                        0) +
-                                    (readModel.nextPage?.pageOffsets?.length ??
-                                        0),
-                                onPageChanged: (idx) =>
-                                    readModel.changeChapter(idx),
-                              )
-                            : LayoutBuilder(builder: (context, constraints) {
-                                return NotificationListener(
-                                  onNotification: (ScrollNotification note) {
-                                    readModel.checkPosition(note.metrics.pixels); // 滚动位置。
+                                child: ListView.builder(
+                                  controller: readModel.listController,
+                                  itemCount: readModel.allContent.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return readModel.allContent[index];
                                   },
-                                  child: ListView.builder(
-                                    controller: readModel.listController,
-                                    itemCount: readModel.allContent.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return readModel.allContent[index];
-                                    },
-                                  ),
-                                );
-                              }),
-                        model.showMenu ? Menu() : Container(),
-                        model.showMenu
-                            ? Positioned(
-                                child: reloadCurChapterWidget(),
-                                bottom: 250,
-                                right: 20,
-                              )
-                            : Container()
-                      ],
-                    )
-                  : Container();
-            })));
+                                ),
+                              );
+                            }),
+                      model.showMenu
+                          ? Menu(
+                              onBack: () {
+                                _onBack();
+                              },
+                            )
+                          : Container(),
+                      model.showMenu
+                          ? Positioned(
+                              child: reloadCurChapterWidget(),
+                              bottom: 250,
+                              right: 20,
+                            )
+                          : Container()
+                    ],
+                  )
+                : Container();
+          },
+        ),
+      ),
+    );
   }
 
   Widget reloadCurChapterWidget() {
@@ -215,9 +231,9 @@ class _ReadBookState extends State<ReadBook> with WidgetsBindingObserver {
   void setSystemBar() {
     var dark = Store.value<ColorModel>(context).dark;
     if (dark) {
-      FlutterStatusbarManager.setStyle(StatusBarStyle.DARK_CONTENT);
-    } else {
       FlutterStatusbarManager.setStyle(StatusBarStyle.LIGHT_CONTENT);
+    } else {
+      FlutterStatusbarManager.setStyle(StatusBarStyle.DARK_CONTENT);
     }
   }
 }

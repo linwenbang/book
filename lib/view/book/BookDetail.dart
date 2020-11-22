@@ -57,10 +57,11 @@ class _BookDetailState extends State<BookDetail> {
 
   PreferredSizeWidget _appBar() {
     return AppBar(
+      brightness: Brightness.light,
       backgroundColor: Colors.transparent,
       leading: IconButton(
-        color: _colorModel.dark ? Colors.white : Colors.black,
-        icon: Icon(Icons.arrow_back),
+        color: _colorModel.dark ? Colors.white : Color(0xFF1e1e1e),
+        icon: Icon(Icons.arrow_back_ios),
         onPressed: () {
           Navigator.of(context).pop();
         },
@@ -72,7 +73,7 @@ class _BookDetailState extends State<BookDetail> {
             child: Text(
               '书架',
               style: TextStyle(
-                color: _colorModel.dark ? Colors.white : Colors.black,
+                color: _colorModel.dark ? Colors.white : Color(0xFF1e1e1e),
               ),
             ),
           ),
@@ -130,47 +131,35 @@ class _BookDetailState extends State<BookDetail> {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 style: TextStyle(fontSize: 12)),
-            width: 270,
+            width: MediaQuery.of(context).size.width - 120,
           ),
           Container(
-              padding:
-                  const EdgeInsets.only(left: 15.0, top: 2.0, bottom: 10.0),
-              child: Row(
-                children: <Widget>[
-                  RatingBar(
-                    itemSize: 30,
-                    initialRating: this.widget._bookInfo.Rate ?? 1,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                    onRatingUpdate: (rating) {
-                      print(rating);
-                    },
+            width: MediaQuery.of(context).size.width - 120,
+            padding: const EdgeInsets.only(left: 15.0, top: 2.0, bottom: 10.0),
+            child: Row(
+              children: <Widget>[
+                RatingBar(
+                  itemSize: 30,
+                  initialRating: this.widget._bookInfo.Rate ?? 1,
+                  minRating: 1,
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                  itemBuilder: (context, _) => Icon(
+                    Icons.star,
+                    color: Colors.amber,
                   ),
-                  // RatingBar(
-                  //   initialRating: _bookInfo.Rate ?? 0.0,
-                  //   minRating: 1,
-                  //   direction: Axis.horizontal,
-                  //   allowHalfRating: true,
-                  //   itemCount: 5,
-                  //   itemSize: 25,
-                  //   itemPadding:
-                  //       EdgeInsets.symmetric(horizontal: 1.0),
-                  //   itemBuilder: (context, _) => Icon(
-                  //     Icons.star,
-                  //     color: Colors.amber,
-                  //   ),
-                  //   onRatingUpdate: (double value) {},
-                  // ),
-                  Text('${this.widget._bookInfo.Rate ?? 0.0}分')
-                ],
-              )),
+                  onRatingUpdate: (rating) {
+                    print(rating);
+                  },
+                ),
+                Expanded(
+                  child: Text('${this.widget._bookInfo.Rate ?? 0.0}分'),
+                )
+              ],
+            ),
+          ),
         ],
       ),
     ]);
@@ -211,7 +200,7 @@ class _BookDetailState extends State<BookDetail> {
                       : "images/add_collapse.png",
                   width: 30,
                   height: 30,
-                  color: _colorModel.dark ? Colors.white : Colors.black,
+                  color: _colorModel.dark ? Colors.white : Color(0xFF1e1e1e),
                 ),
                 onTap: () {
                   if (mounted) {
@@ -378,7 +367,6 @@ class _BookDetailState extends State<BookDetail> {
         : Container();
   }
 
- 
   @override
   Widget build(BuildContext context) {
     // return SliverAppBarDemo(this.widget._bookInfo);

@@ -43,7 +43,6 @@ class AllTagBook extends StatelessWidget {
                   Routes.navigateTo(context, Routes.detail,
                       params: {"detail": jsonEncode(bookInfo)});
                 }
-           
               },
             ),
             Text(
@@ -58,28 +57,29 @@ class AllTagBook extends StatelessWidget {
 
     return Store.connect<ColorModel>(
         builder: (context, ColorModel data, child) => Theme(
-          data: data.theme,
-          child: Scaffold(
-              appBar: AppBar(
-                title: Text(title),
-                centerTitle: true,
-                elevation: 0,
-              ),
-              body: ListView(
-                children: <Widget>[
-                  GridView(
-                    shrinkWrap: true,
-                    physics: new NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.all(5.0),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 4,
-                        mainAxisSpacing: 1.0,
-                        crossAxisSpacing: 10.0,
-                        childAspectRatio: 0.6),
-                    children: bks.map((item) => img(item)).toList(),
-                  )
-                ],
-              )),
-        ));
+              data: data.theme,
+              child: Scaffold(
+                  appBar: AppBar(
+                    brightness: Brightness.light,
+                    title: Text(title),
+                    centerTitle: true,
+                    elevation: 0,
+                  ),
+                  body: ListView(
+                    children: <Widget>[
+                      GridView(
+                        shrinkWrap: true,
+                        physics: new NeverScrollableScrollPhysics(),
+                        padding: EdgeInsets.all(5.0),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 4,
+                            mainAxisSpacing: 1.0,
+                            crossAxisSpacing: 10.0,
+                            childAspectRatio: 0.6),
+                        children: bks.map((item) => img(item)).toList(),
+                      )
+                    ],
+                  )),
+            ));
   }
 }

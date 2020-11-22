@@ -11,17 +11,31 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>book</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
+	<string>瞎看</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>需要音乐权限</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>需要日历权限</string>
+	<key>NSContactsUsageDescription</key>
+	<string>需要通讯录权限</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>需要使用定位</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>需要使用定位</string>
+	<key>NSLocationUsageDescription</key>
+	<string>需要使用定位</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>需要使用定位</string>
+	<key>NSMotionUsageDescription</key>
+	<string>需要运动权限</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>需要麦克权限</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -29,8 +43,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

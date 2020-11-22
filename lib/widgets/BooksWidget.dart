@@ -225,7 +225,9 @@ class _BooksWidgetState extends State<BooksWidget> {
                       padding: const EdgeInsets.only(left: 10.0, top: 10.0),
                       child: Stack(
                         children: <Widget>[
-                          PicWidget(item.Img),
+                          PicWidget(
+                            item.Img,
+                          ),
                           item.NewChapterCount == 1
                               ? Container(
                                   height: 115,

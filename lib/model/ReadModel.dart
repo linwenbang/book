@@ -354,13 +354,13 @@ class ReadModel with ChangeNotifier {
     ReadPage r = new ReadPage();
     if (idx < 0) {
       r.chapterName = "1";
-      r.pageOffsets = List(1);
+      r.pageOffsets = [];
       r.height = Screen.height;
       r.chapterContent = "Fall In Love At First Sight ,Miss.Zhang";
       return r;
     } else if (idx == chapters.length) {
       r.chapterName = "-1";
-      r.pageOffsets = List(1);
+      r.pageOffsets = [];
       r.chapterContent = "没有更多内容,等待作者更新";
       return r;
     }
@@ -603,18 +603,17 @@ class ReadModel with ChangeNotifier {
                         children: <Widget>[
                           SizedBox(height: ScreenUtil.getStatusBarH(context)),
                           Container(
-                            height: 30,
                             alignment: Alignment.centerLeft,
-                            padding: EdgeInsets.only(left: 3),
+                            padding: EdgeInsets.only(left: 15),
                             child: Text(
                               r.chapterName,
                               // strutStyle: StrutStyle(
                               //     forceStrutHeight: true,
                               //     height: textLineHeight),
                               style: TextStyle(
-                                fontSize: 12 / Screen.textScaleFactor,
+                                fontSize: 14 / Screen.textScaleFactor,
                                 color:
-                                    model.dark ? Colors.white30 : Colors.black,
+                                    model.dark ? Colors.white30 : Color(0xFF1e1e1e),
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -634,22 +633,11 @@ class ReadModel with ChangeNotifier {
                                             fontSize:
                                                 ReadSetting.getFontSize() /
                                                     Screen.textScaleFactor,
-                                            // height:
-                                            //     ReadSetting.getLatterHeight()/ReadSetting.getFontSize() ,
-                                            // letterSpacing:
-                                            //     ReadSetting.getLatterSpace(),
                                             textBaseline:
                                                 TextBaseline.ideographic,
                                             color: model.dark
-                                                ? Colors.white30
-                                                : Colors.black,
-                                            // fontSize:
-                                            //     ReadSetting.getFontSize() /
-                                            //         Screen.textScaleFactor,
-                                            // height: ReadSetting
-                                            //     .getLatterHeight(),
-                                            // letterSpacing: ReadSetting
-                                            //     .getLatterSpace()
+                                                ? Colors.white60
+                                                : Color(0xFF1e1e1e),
                                           ))
                                     ]),
                                     textAlign: TextAlign.justify,
@@ -662,14 +650,11 @@ class ReadModel with ChangeNotifier {
                                 Expanded(child: Container()),
                                 Text(
                                   '第${i + 1}/${r.pageOffsets.length}页',
-                                  // strutStyle: StrutStyle(
-                                  //     forceStrutHeight: true,
-                                  //     height: textLineHeight),
                                   style: TextStyle(
                                     fontSize: 12 / Screen.textScaleFactor,
                                     color: model.dark
                                         ? Colors.white30
-                                        : Colors.black,
+                                        : Color(0xFF1e1e1e),
                                   ),
                                   textAlign: TextAlign.center,
                                 ),

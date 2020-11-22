@@ -22,6 +22,7 @@ class _CacheManager extends State<CacheManager> {
         builder: (context, ColorModel data, child) => Theme(
               child: Scaffold(
                 appBar: AppBar(
+                  brightness: Brightness.light,
                   title: Text("缓存管理"),
                   centerTitle: true,
                   elevation: 0,

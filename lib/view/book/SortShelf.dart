@@ -24,10 +24,11 @@ class _SortShelfState extends State<SortShelf> {
         builder: (context, ShelfModel shelfModel, child) {
       return Scaffold(
           appBar: AppBar(
+            brightness: Brightness.light,
             backgroundColor: Colors.transparent,
             title: Text("书架整理",
                 style: TextStyle(
-                  color: _colorModel.dark ? Colors.white : Colors.black,
+                  color: _colorModel.dark ? Colors.white : Color(0xFF1e1e1e),
                 )),
             elevation: 0,
             centerTitle: true,

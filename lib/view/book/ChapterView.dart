@@ -144,7 +144,7 @@ class _ChapterViewItem extends State<ChapterView> {
               ],
             ),
           ),
-          preferredSize: Size.fromHeight(130),
+          preferredSize: Size.fromHeight(140),
         ),
         body: Column(
           children: [

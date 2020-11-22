@@ -16,6 +16,9 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatefulWidget {
+  final Function onBack;
+
+  const Menu({Key key, this.onBack}) : super(key: key);
   @override
   _MenuState createState() => _MenuState();
 }
@@ -45,7 +48,7 @@ class _MenuState extends State<Menu> {
 
   Widget head() {
     return Container(
-      color: _colorModel.dark ? Colors.black : Colors.white,
+      color: _colorModel.dark ? Color(0xFF1e1e1e) : Colors.white,
       padding: EdgeInsets.symmetric(horizontal: 15.0),
       child: Row(
         children: [
@@ -150,8 +153,8 @@ class _MenuState extends State<Menu> {
 
   Widget fontOperate(String imgName, func) {
     return Container(
-      decoration:
-          BoxDecoration(color: _colorModel.dark ? Colors.black : Colors.white),
+      decoration: BoxDecoration(
+          color: _colorModel.dark ? Color(0xFF1e1e1e) : Colors.white),
       height: 40,
       width: 140,
       margin: EdgeInsets.only(top: 15, bottom: 15),
@@ -162,7 +165,7 @@ class _MenuState extends State<Menu> {
               borderRadius: BorderRadius.all(Radius.circular(25.0)),
               border: Border.all(
                 width: 1,
-                color: _colorModel.dark ? Colors.white : Colors.black,
+                color: _colorModel.dark ? Colors.white : Color(0xFF1e1e1e),
               )),
           alignment: Alignment(0, 0),
           child: ImageIcon(
@@ -176,7 +179,7 @@ class _MenuState extends State<Menu> {
   Widget downloadWidget() {
     return Container(
       decoration: BoxDecoration(
-        color: _colorModel.dark ? Colors.black : Colors.white,
+        color: _colorModel.dark ? Color(0xFF1e1e1e) : Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
       height: 70,
@@ -188,7 +191,8 @@ class _MenuState extends State<Menu> {
               children: <Widget>[
                 Container(
                   decoration: BoxDecoration(
-                      color: _colorModel.dark ? Colors.black : Colors.white),
+                      color:
+                          _colorModel.dark ? Color(0xFF1e1e1e) : Colors.white),
                   height: 40,
                   width: (Screen.width - 40) / 2,
                   margin: EdgeInsets.only(top: 15, bottom: 15),
@@ -203,8 +207,9 @@ class _MenuState extends State<Menu> {
                           borderRadius: BorderRadius.all(Radius.circular(20.0)),
                           border: Border.all(
                             width: 1,
-                            color:
-                                _colorModel.dark ? Colors.white : Colors.black,
+                            color: _colorModel.dark
+                                ? Colors.white
+                                : Color(0xFF1e1e1e),
                           )),
                       alignment: Alignment(0, 0),
                       child: Text(
@@ -218,7 +223,8 @@ class _MenuState extends State<Menu> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                      color: _colorModel.dark ? Colors.black : Colors.white),
+                      color:
+                          _colorModel.dark ? Color(0xFF1e1e1e) : Colors.white),
                   height: 40,
                   width: (Screen.width - 40) / 2,
                   margin: EdgeInsets.only(top: 15, bottom: 15),
@@ -233,8 +239,9 @@ class _MenuState extends State<Menu> {
                           borderRadius: BorderRadius.all(Radius.circular(25.0)),
                           border: Border.all(
                             width: 1,
-                            color:
-                                _colorModel.dark ? Colors.white : Colors.black,
+                            color: _colorModel.dark
+                                ? Colors.white
+                                : Color(0xFF1e1e1e),
                           )),
                       alignment: Alignment(0, 0),
                       child: Text(
@@ -255,7 +262,7 @@ class _MenuState extends State<Menu> {
   Widget moreSetting() {
     return Container(
       decoration: BoxDecoration(
-        color: _colorModel.dark ? Colors.black : Colors.white,
+        color: _colorModel.dark ? Color(0xFF1e1e1e) : Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
       height: 130,
@@ -295,32 +302,33 @@ class _MenuState extends State<Menu> {
                 SizedBox(
                   width: 10,
                 ),
-               Container(
-                    child: FlatButton(
-                      onPressed: () {
-                        Routes.navigateTo(
-                          context,
-                          Routes.fontSet,
-                        );
-                      },
-                      child: Row(
-                        children: [
-                          Text(
-                            '字体',
-                            style: TextStyle(
-                                color: _colorModel.dark
-                                    ? Colors.white
-                                    : Colors.black),
-                          ),
-                          Icon(Icons.arrow_forward_ios,size: 12,)
-                        ],
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(20.0))),
+                Container(
+                  child: FlatButton(
+                    onPressed: () {
+                      Routes.navigateTo(
+                        context,
+                        Routes.fontSet,
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        Text(
+                          '字体',
+                          style: TextStyle(
+                              color: _colorModel.dark
+                                  ? Colors.white
+                                  : Color(0xFF1e1e1e)),
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          size: 12,
+                        )
+                      ],
                     ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
                   ),
-               
+                ),
               ],
             ),
           ),
@@ -357,14 +365,17 @@ class _MenuState extends State<Menu> {
       opacity: 0.99999,
       child: Container(
         decoration: BoxDecoration(
-          color: _colorModel.dark ? Colors.black : Colors.white,
+          color: _colorModel.dark ? Color(0xFF1e1e1e) : Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
         ),
         // height: 140,
         width: double.infinity,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[bottomHead(), buildBottomMenus()],
+          children: <Widget>[
+            bottomHead(),
+            buildBottomMenus(),
+          ],
         ),
       ),
     );
@@ -376,11 +387,7 @@ class _MenuState extends State<Menu> {
       child: Container(
         child: Column(
           children: <Widget>[
-            // Container(
-            //   color: _colorModel.dark ? Colors.black : Colors.white,
-            //   height: Screen.topSafeHeight,
-            // ),
-            // head(),
+            _renderBar(),
             midTranspant(),
             bottom(),
           ],
@@ -389,6 +396,27 @@ class _MenuState extends State<Menu> {
       onTap: () {
         _readModel.toggleShowMenu();
       },
+    );
+  }
+
+  _renderBar() {
+    return Container(
+      color: _colorModel.dark ? Color(0xFF1e1e1e) : Colors.white,
+      child: SafeArea(
+          child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            color: _colorModel.dark ? Colors.white : Color(0xFF1e1e1e),
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              if (widget.onBack is Function) {
+                widget.onBack();
+              }
+            },
+          )
+        ],
+      )),
     );
   }
 

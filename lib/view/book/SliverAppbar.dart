@@ -16,18 +16,19 @@ class _SliverAppBarDemoState extends State<SliverAppBarDemo> {
   @override
   void initState() {
     super.initState();
-    _colorModel=Store.value<ColorModel>(context);
-
+    _colorModel = Store.value<ColorModel>(context);
   }
+
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: <Widget>[
         SliverAppBar(
-            backgroundColor: Colors.transparent,
+          brightness: Brightness.light,
+          backgroundColor: Colors.transparent,
           leading: IconButton(
-            color: _colorModel.dark ? Colors.white : Colors.black,
-            icon: Icon(Icons.arrow_back),
+            color: _colorModel.dark ? Colors.white : Color(0xFF1e1e1e),
+            icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -39,7 +40,7 @@ class _SliverAppBarDemoState extends State<SliverAppBarDemo> {
                 child: Text(
                   '书架',
                   style: TextStyle(
-                    color: _colorModel.dark ? Colors.white : Colors.black,
+                    color: _colorModel.dark ? Colors.white : Color(0xFF1e1e1e),
                   ),
                 ),
               ),
@@ -52,12 +53,14 @@ class _SliverAppBarDemoState extends State<SliverAppBarDemo> {
               width: 20,
             )
           ],
-        
           pinned: true,
           expandedHeight: 200.0,
           flexibleSpace: FlexibleSpaceBar(
             title: Text(this.widget._bookInfo.Name),
-            background: Image(image: AssetImage("images/QR_bg_3.jpg"),fit: BoxFit.cover,),
+            background: Image(
+              image: AssetImage("images/QR_bg_3.jpg"),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
         SliverFixedExtentList(

@@ -35,6 +35,7 @@ class StateFontSet extends State<FontSet> {
         builder: (context, ColorModel model, child) {
       return Scaffold(
         appBar: AppBar(
+          brightness: Brightness.light,
           title: Text('阅读字体'),
           elevation: 0,
           centerTitle: true,

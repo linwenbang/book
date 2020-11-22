@@ -43,16 +43,17 @@ class VideoState extends State<Video> with AutomaticKeepAliveClientMixin {
           ? Scaffold()
           : Scaffold(
               appBar: AppBar(
+                brightness: Brightness.light,
                 backgroundColor: Colors.transparent,
                 title: Text(
                   "美剧",
                   style: TextStyle(
-                    color: value.dark ? Colors.white : Colors.black,
+                    color: value.dark ? Colors.white : Color(0xFF1e1e1e),
                   ),
                 ),
                 centerTitle: true,
                 leading: IconButton(
-                  color: value.dark ? Colors.white : Colors.black,
+                  color: value.dark ? Colors.white : Color(0xFF1e1e1e),
                   icon: Icon(Icons.history),
                   onPressed: () {
                     eventBus.fire(OpenEvent("m"));
@@ -61,7 +62,7 @@ class VideoState extends State<Video> with AutomaticKeepAliveClientMixin {
                 elevation: 0,
                 actions: <Widget>[
                   IconButton(
-                    color: value.dark ? Colors.white : Colors.black,
+                    color: value.dark ? Colors.white : Color(0xFF1e1e1e),
                     icon: Icon(Icons.search),
                     onPressed: () {
                       Routes.navigateTo(context, Routes.search,
@@ -92,8 +93,7 @@ class VideoState extends State<Video> with AutomaticKeepAliveClientMixin {
       List objectList = jsonDecode(SpUtil.getString(Common.cache_index));
       formatData(objectList);
     }
-    Response res =
-        await Util(null ).http().get(Common.index);
+    Response res = await Util(null).http().get(Common.index);
     List data = res.data;
     if (haveKey) {
       SpUtil.remove(Common.cache_index);

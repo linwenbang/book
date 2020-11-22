@@ -47,6 +47,7 @@ class TagVideoState extends State<TagVideo> {
         builder: (context, ColorModel model, child) => Theme(
               child: Scaffold(
                 appBar: AppBar(
+                  brightness: Brightness.light,
                   title: Text(this.widget.name),
                   centerTitle: true,
                   elevation: 0,
@@ -78,7 +79,6 @@ class TagVideoState extends State<TagVideo> {
                   onLoading: onLoading,
                   child: GridView(
                     shrinkWrap: true,
-
                     padding: EdgeInsets.all(5.0),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
@@ -135,10 +135,8 @@ class TagVideoState extends State<TagVideo> {
         gbks.add(GBook.fromJson(f));
       });
     }
-    if(mounted){
-      setState(() {
-
-      });
+    if (mounted) {
+      setState(() {});
     }
   }
 

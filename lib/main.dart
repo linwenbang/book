@@ -38,6 +38,8 @@ void main() async {
       SystemUiOverlayStyle systemUiOverlayStyle =
           SystemUiOverlayStyle(statusBarColor: Colors.transparent);
       SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+    } else { 
+      
     }
   }
 }
@@ -46,17 +48,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Store.connect<ColorModel>(
-        builder: (context, ColorModel model, child) {
-      return MaterialApp(
-        title: '清阅',
-        home: MainPage(),
-        builder: BotToastInit(),
-        //
-        navigatorObservers: [BotToastNavigatorObserver()],
-        onGenerateRoute: Routes.router.generator,
-        theme: model.theme, // 配置route generate
-      );
-    });
+      builder: (context, ColorModel model, child) {
+        return MaterialApp(
+          title: '瞎看',
+          home: MainPage(),
+          builder: BotToastInit(),
+          navigatorObservers: [BotToastNavigatorObserver(), RouterObserver()],
+          onGenerateRoute: Routes.router.generator,
+          theme: model.theme, // 配置route generate
+        );
+      },
+    );
   }
 }
 
@@ -155,7 +157,8 @@ class _MainPageState extends State<MainPage> {
                 itemCount: _pages.length,
                 itemBuilder: (context, index) => _pages[index]),
             bottomNavigationBar: BottomNavigationBar(
-              unselectedItemColor: model.dark ? Colors.white : Colors.black,
+              unselectedItemColor:
+                  model.dark ? Colors.white : Color(0xFF1e1e1e),
               elevation: 0,
               items: bottoms,
               type: BottomNavigationBarType.fixed,

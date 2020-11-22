@@ -39,6 +39,7 @@ class _SearchState extends State<Search> {
     value = Store.value<ColorModel>(context);
     return Scaffold(
       appBar: AppBar(
+        brightness: Brightness.light,
         backgroundColor: Colors.transparent,
         title: buildSearchWidget(),
         elevation: 0,
@@ -92,38 +93,38 @@ class _SearchState extends State<Search> {
       children: <Widget>[
         Expanded(
           child: Container(
-                  //修饰黑色背景与圆角
-                  decoration: BoxDecoration(
-                    //灰色的一层边框
-                    border: Border.all(
-                        color: value.dark ? Colors.white : Colors.black,
-                        width: 0.5),
-                    // color: data.dark ? Colors.white : Colors.black,
-                    borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                  ),
-                  alignment: Alignment.center,
-                  height: 40,
-                  child: Center(
-                    child: TextField(
-                      controller: controller,
-                      onSubmitted: (word) {
-                        searchModel.search(word);
+              //修饰黑色背景与圆角
+              decoration: BoxDecoration(
+                //灰色的一层边框
+                border: Border.all(
+                    color: value.dark ? Colors.white : Color(0xFF1e1e1e),
+                    width: 0.5),
+                // color: data.dark ? Colors.white : Color(0xFF1e1e1e),
+                borderRadius: BorderRadius.all(Radius.circular(25.0)),
+              ),
+              alignment: Alignment.center,
+              height: 40,
+              child: Center(
+                child: TextField(
+                  controller: controller,
+                  onSubmitted: (word) {
+                    searchModel.search(word);
+                  },
+                  autofocus: false,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(bottom: 6, left: 20),
+                    border: InputBorder.none,
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.close),
+                      onPressed: () {
+                        controller.text = "";
+                        searchModel.reset();
                       },
-                      autofocus: false,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(bottom: 6, left: 20),
-                        border: InputBorder.none,
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.close),
-                          onPressed: () {
-                            controller.text = "";
-                            searchModel.reset();
-                          },
-                        ),
-                        hintText: isBookSearch ? "书籍/作者名" : "美剧/作者",
-                      ),
                     ),
-                  )),
+                    hintText: isBookSearch ? "书籍/作者名" : "美剧/作者",
+                  ),
+                ),
+              )),
           flex: 5,
         ),
         SizedBox(
@@ -135,8 +136,8 @@ class _SearchState extends State<Search> {
               child: GestureDetector(
                 child: Text(
                   '搜索',
-                  style:
-                      TextStyle(color: value.dark ? Colors.white : Colors.black),
+                  style: TextStyle(
+                      color: value.dark ? Colors.white : Color(0xFF1e1e1e)),
                 ),
                 onTap: () {
                   searchModel.search(controller.text);

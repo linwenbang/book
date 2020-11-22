@@ -94,7 +94,7 @@ class LookVideoState extends State<LookVideo> with WidgetsBindingObserver {
                   ? Scaffold(
                       body: Column(
                         children: <Widget>[
-                          Container(height: ScreenUtil.getStatusBarH(context),color: Colors.black,),
+                          Container(height: ScreenUtil.getStatusBarH(context),color: Color(0xFF1e1e1e),),
                           initOk
                               ? Chewie(
                                   controller: chewieController,
@@ -102,7 +102,7 @@ class LookVideoState extends State<LookVideo> with WidgetsBindingObserver {
                               : Container(
                                   width: double.infinity,
                                   height: 225,
-                                  color: Colors.black,
+                                  color: Color(0xFF1e1e1e),
                                   child: Center(
                                       child: Container(
                                         child: SpinKitCircle(
@@ -253,7 +253,7 @@ class LookVideoState extends State<LookVideo> with WidgetsBindingObserver {
           _urlChange(map.keys.elementAt(0), map.values.elementAt(0));
         },
         color: map.keys.elementAt(0) == urlKey
-            ?Colors.black
+            ?Color(0xFF1e1e1e)
             : colorModel.theme.primaryColor,
       ));
     }

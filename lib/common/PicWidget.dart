@@ -75,22 +75,23 @@ class PicWidget extends StatelessWidget {
   double height;
   double width;
   bool fitOk;
+  double radius;
 
-  PicWidget(this.url, {this.height = 115, this.width = 97, this.fitOk});
+  PicWidget(
+    this.url, {
+    this.height = 115,
+    this.width = 97,
+    this.fitOk,
+    this.radius: 4,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-    //    decoration: BoxDecoration(shape: BoxShape.rectangle, boxShadow: [
-    //   BoxShadow(color: Colors.grey[300],offset: Offset(1, 1),blurRadius: 3,),
-    //   BoxShadow(color: Colors.grey[300], offset: Offset(-1, -1), blurRadius: 3),
-    //   BoxShadow(color: Colors.grey[300], offset: Offset(1, -1), blurRadius: 3),
-    //   BoxShadow(color: Colors.grey[300], offset: Offset(-1, 1), blurRadius: 3)
-    // ]),
       child: CachedNetworkImage(
         imageUrl: url,
         imageBuilder: (context, imageProvider) => ClipRRect(
-//        borderRadius: BorderRadius.circular(5),
+          borderRadius: BorderRadius.circular(radius),
           child: Container(
             width: width,
             height: height,

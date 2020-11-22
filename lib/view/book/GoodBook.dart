@@ -54,10 +54,11 @@ class StateGoodBook extends State<GoodBook>
       length: tabs.length,
       child: Scaffold(
           appBar: AppBar(
+            brightness: Brightness.light,
             backgroundColor: Colors.transparent,
             title: TabBar(
-              unselectedLabelColor: Colors.black38,
-              labelColor: value.dark ? Colors.white : Colors.black,
+              unselectedLabelColor: Color(0xFF1e1e1e),
+              labelColor: value.dark ? Colors.white : Color(0xFF1e1e1e),
               indicatorColor: Theme.of(context).primaryColor,
               indicatorSize: TabBarIndicatorSize.label,
               controller: controller,

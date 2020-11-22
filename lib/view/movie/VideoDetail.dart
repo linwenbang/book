@@ -31,16 +31,17 @@ class VideoDetailState extends State<VideoDetail> {
     return Store.connect<ColorModel>(
       builder: (context, ColorModel model, child) => Scaffold(
           appBar: AppBar(
+            brightness: Brightness.light,
             backgroundColor: Colors.transparent,
             title: Text(
               this.widget.gBook.name,
               style: TextStyle(
-                color: model.dark ? Colors.white : Colors.black,
+                color: model.dark ? Colors.white : Color(0xFF1e1e1e),
               ),
             ),
             leading: IconButton(
-              color: model.dark ? Colors.white : Colors.black,
-              icon: Icon(Icons.arrow_back),
+              color: model.dark ? Colors.white : Color(0xFF1e1e1e),
+              icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -53,7 +54,7 @@ class VideoDetailState extends State<VideoDetail> {
                   child: Text(
                     '美剧',
                     style: TextStyle(
-                      color: model.dark ? Colors.white : Colors.black,
+                      color: model.dark ? Colors.white : Color(0xFF1e1e1e),
                     ),
                   ),
                 ),
@@ -219,9 +220,9 @@ class VideoDetailState extends State<VideoDetail> {
             //灰色的一层边框
             borderRadius: BorderRadius.all(Radius.circular(25.0)),
             border: Border.all(
-                color: v.dark ? Colors.white : Colors.black, width: 0.5),
+                color: v.dark ? Colors.white : Color(0xFF1e1e1e), width: 0.5),
 
-            // color: data.dark ? Colors.white : Colors.black,
+            // color: data.dark ? Colors.white : Color(0xFF1e1e1e),
           ),
         ),
         onTap: () {

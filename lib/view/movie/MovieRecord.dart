@@ -20,7 +20,7 @@ class _MovieRecordState extends State<MovieRecord> {
     super.initState();
   }
 
-   init() async {
+  init() async {
     List<MRecords> mrds = await DbHelper().getMovies();
 
     for (var i = mrds.length - 1; i >= 0; i--) {
@@ -47,18 +47,20 @@ class _MovieRecordState extends State<MovieRecord> {
       ));
       wds.add(Divider());
     }
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    var dark=Store.value<ColorModel>(context).dark;
+    var dark = Store.value<ColorModel>(context).dark;
     return Scaffold(
       appBar: AppBar(
+        brightness: Brightness.light,
         automaticallyImplyLeading: false,
-        title: Text('观看记录',style: TextStyle(color: dark?Colors.white:Colors.black),),
+        title: Text(
+          '观看记录',
+          style: TextStyle(color: dark ? Colors.white : Color(0xFF1e1e1e)),
+        ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
