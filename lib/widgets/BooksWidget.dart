@@ -49,27 +49,28 @@ class _BooksWidgetState extends State<BooksWidget> {
   @override
   Widget build(BuildContext context) {
     return SmartRefresher(
-        enablePullDown: true,
-        footer: CustomFooter(
-          builder: (BuildContext context, LoadStatus mode) {
-            if (mode == LoadStatus.idle) {
-            } else if (mode == LoadStatus.loading) {
-              body = CupertinoActivityIndicator();
-            } else if (mode == LoadStatus.failed) {
-              body = Text("加载失败！点击重试！");
-            } else if (mode == LoadStatus.canLoading) {
-              body = Text("松手,加载更多!");
-            } else {
-              body = Text("到底了!");
-            }
-            return Center(
-              child: body,
-            );
-          },
-        ),
-        controller: _refreshController,
-        onRefresh: freshShelf,
-        child: _shelfModel.model ? coverModel() : listModel());
+      enablePullDown: true,
+      footer: CustomFooter(
+        builder: (BuildContext context, LoadStatus mode) {
+          if (mode == LoadStatus.idle) {
+          } else if (mode == LoadStatus.loading) {
+            body = CupertinoActivityIndicator();
+          } else if (mode == LoadStatus.failed) {
+            body = Text("加载失败！点击重试！");
+          } else if (mode == LoadStatus.canLoading) {
+            body = Text("松手,加载更多!");
+          } else {
+            body = Text("到底了!");
+          }
+          return Center(
+            child: body,
+          );
+        },
+      ),
+      controller: _refreshController,
+      onRefresh: freshShelf,
+      child: _shelfModel.model ? coverModel() : listModel(),
+    );
   }
 
   //刷新书架
@@ -179,23 +180,32 @@ class _BooksWidgetState extends State<BooksWidget> {
 
   //书架列表模式
   Widget listModel() {
-    return ListView.builder(
-        itemCount: _shelfModel.shelf.length,
-        itemBuilder: (context, i) {
-          return GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () async {
-              await goRead(_shelfModel.shelf[i], i);
-            },
-            child: getBookItemView(_shelfModel.shelf[i], i),
-            onLongPress: () {
-              Routes.navigateTo(
-                context,
-                Routes.sortShelf,
-              );
-            },
-          );
-        });
+    return ListView.separated(
+      itemCount: _shelfModel.shelf.length,
+      itemBuilder: (context, i) {
+        return GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () async {
+            await goRead(_shelfModel.shelf[i], i);
+          },
+          child: _renderBookItem(_shelfModel.shelf[i], i),
+          onLongPress: () {
+            Routes.navigateTo(
+              context,
+              Routes.sortShelf,
+            );
+          },
+        );
+      },
+      separatorBuilder: (ctx, index) {
+        return Padding(
+          padding: EdgeInsets.only(left: 86, right: 12),
+          child: Divider(
+            height: 1,
+          ),
+        );
+      },
+    );
   }
 
   Future goRead(Book book, int i) async {
@@ -210,72 +220,18 @@ class _BooksWidgetState extends State<BooksWidget> {
     _shelfModel.upTotop(b, i);
   }
 
-  getBookItemView(Book item, int i) {
+  _renderBookItem(Book item, int i) {
     return Dismissible(
       key: Key(item.Id.toString()),
       child: Stack(
         children: [
           Container(
+            padding: const EdgeInsets.only(left: 16.0, top: 12.0),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.only(left: 10.0, top: 10.0),
-                      child: Stack(
-                        children: <Widget>[
-                          PicWidget(
-                            item.Img,
-                          ),
-                          item.NewChapterCount == 1
-                              ? Container(
-                                  height: 115,
-                                  width: 97,
-                                  child: Align(
-                                    alignment: Alignment.topRight,
-                                    child: Image.asset(
-                                      'images/h6.png',
-                                      width: 30,
-                                      height: 30,
-                                    ),
-                                  ),
-                                )
-                              : Container(),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      width: ScreenUtil.getScreenW(context) - 115,
-                      padding: const EdgeInsets.only(left: 10.0, top: 8.0),
-                      child: Text(
-                        item.Name,
-                        style: TextStyle(
-                            fontSize: 16.0, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 10.0, top: 12.0),
-                      child: Text(
-                        item.LastChapter,
-                        style: TextStyle(fontSize: 12),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                      ),
-                      width: ScreenUtil.getScreenW(context) - 115,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 10.0, top: 22.0),
-                      child: Text(item?.UTime ?? '',
-                          style: TextStyle(color: Colors.grey, fontSize: 11)),
-                    ),
-                  ],
-                ),
+                _renderImage(item),
+                _renderTitle(item),
               ],
             ),
           ),
@@ -361,6 +317,70 @@ class _BooksWidgetState extends State<BooksWidget> {
             });
         return isDismiss;
       },
+    );
+  }
+
+  Column _renderTitle(Book item) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          width: ScreenUtil.getScreenW(context) - 115,
+          padding: const EdgeInsets.only(left: 10.0, top: 8.0),
+          child: Text(
+            item.Name,
+            style: TextStyle(
+              fontSize: 14.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.only(left: 10.0, top: 4),
+          child: Text(
+            item.LastChapter,
+            style: TextStyle(fontSize: 11),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+          ),
+          width: ScreenUtil.getScreenW(context) - 115,
+        ),
+        Container(
+          padding: const EdgeInsets.only(left: 10.0, top: 6.0),
+          child: Text(item?.UTime ?? '',
+              style: TextStyle(color: Colors.grey, fontSize: 11)),
+        ),
+      ],
+    );
+  }
+
+  Column _renderImage(Book item) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          child: Stack(
+            children: <Widget>[
+              PicWidget(
+                item.Img,
+                width: 55,
+                height: 77,
+              ),
+              if (item.NewChapterCount == 1)
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: Image.asset(
+                    'images/h6.png',
+                    width: 30,
+                    height: 30,
+                  ),
+                ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }

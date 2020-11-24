@@ -38,16 +38,18 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     value = Store.value<ColorModel>(context);
     return Scaffold(
-      appBar: AppBar(
-        brightness: Brightness.light,
-        backgroundColor: Colors.transparent,
-        title: buildSearchWidget(),
-        elevation: 0,
-        automaticallyImplyLeading: false,
-      ),
       body:
           Store.connect<SearchModel>(builder: (context, SearchModel d, child) {
-        return d.showResult ? resultWidget() : suggestionWidget(d);
+        final child = d.showResult ? resultWidget() : suggestionWidget(d);
+        return Column(
+          children: [
+            SafeArea(
+              child: buildSearchWidget(),
+              bottom: false,
+            ),
+            Expanded(child: child)
+          ],
+        );
       }),
     );
   }
@@ -91,19 +93,18 @@ class _SearchState extends State<Search> {
   Widget buildSearchWidget() {
     return Row(
       children: <Widget>[
+        IconButton(
+          color: value.dark ? Colors.white : Color(0xFF1e1e1e),
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
         Expanded(
           child: Container(
-              //修饰黑色背景与圆角
-              decoration: BoxDecoration(
-                //灰色的一层边框
-                border: Border.all(
-                    color: value.dark ? Colors.white : Color(0xFF1e1e1e),
-                    width: 0.5),
-                // color: data.dark ? Colors.white : Color(0xFF1e1e1e),
-                borderRadius: BorderRadius.all(Radius.circular(25.0)),
-              ),
+              padding: EdgeInsets.only(top: 12, right: 12),
               alignment: Alignment.center,
-              height: 40,
+              height: 30,
               child: Center(
                 child: TextField(
                   controller: controller,
@@ -112,16 +113,8 @@ class _SearchState extends State<Search> {
                   },
                   autofocus: false,
                   decoration: InputDecoration(
-                    contentPadding: EdgeInsets.only(bottom: 6, left: 20),
-                    border: InputBorder.none,
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.close),
-                      onPressed: () {
-                        controller.text = "";
-                        searchModel.reset();
-                      },
-                    ),
                     hintText: isBookSearch ? "书籍/作者名" : "美剧/作者",
+                    hintStyle: TextStyle(fontSize: 14),
                   ),
                 ),
               )),
@@ -130,24 +123,21 @@ class _SearchState extends State<Search> {
         SizedBox(
           width: 5,
         ),
-        Expanded(
-          child: Center(
-            child: Padding(
-              child: GestureDetector(
-                child: Text(
-                  '搜索',
-                  style: TextStyle(
-                      color: value.dark ? Colors.white : Color(0xFF1e1e1e)),
-                ),
-                onTap: () {
-                  searchModel.search(controller.text);
-                },
-              ),
-              padding: EdgeInsets.only(left: 1, right: 1),
+        GestureDetector(
+          child: Text(
+            '搜索',
+            style: TextStyle(
+              color: value.dark ? Colors.white : Color(0xFF1e1e1e),
+              fontSize: 16,
             ),
           ),
-          flex: 1,
-        )
+          onTap: () {
+            searchModel.search(controller.text);
+          },
+        ),
+        SizedBox(
+          width: 16,
+        ),
       ],
     );
   }
@@ -305,14 +295,16 @@ class _SearchState extends State<Search> {
   Widget suggestionWidget(data) {
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.only(left: 5, right: 5, top: 10),
+        padding: EdgeInsets.only(left: 16, right: 16, top: 10),
         child: Column(
           children: <Widget>[
             Row(
               children: <Widget>[
                 Text(
                   '搜索历史',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
                 Expanded(
                   child: Container(),
@@ -328,10 +320,6 @@ class _SearchState extends State<Search> {
                 )
               ],
             ),
-//          ListView(
-//            shrinkWrap: true,
-//            children: data.getHistory(),
-//          ),
             Wrap(
               children: searchModel?.getHistory() ?? [],
               spacing: 10, //主轴上子控件的间距
@@ -341,7 +329,7 @@ class _SearchState extends State<Search> {
               children: <Widget>[
                 Text(
                   '热门${this.widget.type == "book" ? "书籍" : "美剧"}',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16),
                 ),
                 Expanded(
                   child: Container(),
@@ -355,7 +343,10 @@ class _SearchState extends State<Search> {
               ],
             ),
             Wrap(
-              children: searchModel?.showHot ?? [], spacing: 10, //主轴上子控件的间距
+              // runAlignment: WrapAlignment.end,
+              // crossAxisAlignment: WrapCrossAlignment.start,
+              children: searchModel?.showHot ?? [],
+              // spacing: 10,
             ),
           ],
         ),

@@ -16,8 +16,12 @@ class Me extends StatelessWidget {
     return ListTile(
       onTap: func,
       leading: imagIcon,
-      title: Text(text),
-//      trailing: Icon(Icons.keyboard_arrow_right),
+      title: Text(
+        text,
+        style: TextStyle(
+          fontSize: 12,
+        ),
+      ),
     );
   }
 
@@ -30,24 +34,26 @@ class Me extends StatelessWidget {
           child: GestureDetector(
             child: Row(
               children: <Widget>[
+                // SizedBox(
+                //   width: 20,
+                // ),
+                // Padding(
+                //   child: Container(
+                //     height: 60,
+                //     width: 60,
+                //     child: CircleAvatar(
+                //       backgroundImage: AssetImage(
+                //         SpUtil.haveKey("username")
+                //             ? "images/fu.png"
+                //             : "images/account.png",
+                //       ),
+                //     ),
+                //   ),
+                //   padding:
+                //       EdgeInsets.only(top: ScreenUtil.getStatusBarH(context)),
+                // ),
                 SizedBox(
                   width: 20,
-                ),
-                Padding(
-                  child: Container(
-                    height: 80,
-                    width: 80,
-                    child: CircleAvatar(
-                      backgroundImage: AssetImage(SpUtil.haveKey("username")
-                          ? "images/fu.png"
-                          : "images/account.png"),
-                    ),
-                  ),
-                  padding:
-                      EdgeInsets.only(top: ScreenUtil.getStatusBarH(context)),
-                ),
-                SizedBox(
-                  width: 10,
                 ),
                 Center(
                   child: Padding(
@@ -55,9 +61,7 @@ class Me extends StatelessWidget {
                       SpUtil.haveKey("username")
                           ? SpUtil.getString('username')
                           : "登陆/注册",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18),
+                      style: TextStyle(fontSize: 14),
                     ),
                     padding: EdgeInsets.only(top: 30),
                   ),
@@ -72,7 +76,6 @@ class Me extends StatelessWidget {
               }
             },
           ),
-          
         ),
       ),
       body: Container(
@@ -156,45 +159,6 @@ class Me extends StatelessWidget {
                   } else {
                     print('不能访问');
                   }
-
-//                  showDialog(
-//                      context: context,
-//                      builder: (context) => AlertDialog(
-//                            title: Text(
-//                              ('QQ群'),
-//                            ),
-//                            content: Row(
-//                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                              children: <Widget>[
-//                                Text(
-//                                  '953457248',
-//                                ),
-//                                SizedBox(
-//                                  width: 50,
-//                                ),
-//                                IconButton(
-//                                  onPressed: () {
-//                                    ClipboardData data =
-//                                        ClipboardData(text: "953457248");
-//                                    Clipboard.setData(data);
-//                                  },
-//                                  icon: Icon(
-//                                    Icons.content_copy,
-//                                  ),
-//                                ),
-//                              ],
-//                            ),
-//                            actions: <Widget>[
-//                              FlatButton(
-//                                child: Text(
-//                                  "确定",
-//                                ),
-//                                onPressed: () {
-//                                  Navigator.of(context).pop();
-//                                },
-//                              ),
-//                            ],
-//                          ));
                 },
               ),
               getItem(

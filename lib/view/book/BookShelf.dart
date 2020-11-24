@@ -32,7 +32,8 @@ class _BookShelfState extends State<BookShelf>
                     brightness: Brightness.light,
                     backgroundColor: Colors.transparent,
                     leading: IconButton(
-                      color: _colorModel.dark ? Colors.white : Color(0xFF1e1e1e),
+                      color:
+                          _colorModel.dark ? Colors.white : Color(0xFF1e1e1e),
                       icon: Icon(Icons.person),
                       onPressed: () {
                         eventBus.fire(OpenEvent("p"));
@@ -42,13 +43,16 @@ class _BookShelfState extends State<BookShelf>
                     title: Text(
                       '书架',
                       style: TextStyle(
-                        color: _colorModel.dark ? Colors.white : Color(0xFF1e1e1e),
-                      ),
+                          color: _colorModel.dark
+                              ? Colors.white
+                              : Color(0xFF1e1e1e),
+                          fontSize: 14),
                     ),
                     centerTitle: true,
                     actions: <Widget>[
                       IconButton(
-                        color: _colorModel.dark ? Colors.white : Color(0xFF1e1e1e),
+                        color:
+                            _colorModel.dark ? Colors.white : Color(0xFF1e1e1e),
                         icon: Icon(Icons.search),
                         onPressed: () {
                           Routes.navigateTo(context, Routes.search,
@@ -56,7 +60,8 @@ class _BookShelfState extends State<BookShelf>
                         },
                       ),
                       IconButton(
-                        color: _colorModel.dark ? Colors.white : Color(0xFF1e1e1e),
+                        color:
+                            _colorModel.dark ? Colors.white : Color(0xFF1e1e1e),
                         icon: Icon(Icons.more_vert),
                         onPressed: () async {
                           String shelfModelName =

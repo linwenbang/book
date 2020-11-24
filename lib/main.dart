@@ -38,9 +38,7 @@ void main() async {
       SystemUiOverlayStyle systemUiOverlayStyle =
           SystemUiOverlayStyle(statusBarColor: Colors.transparent);
       SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
-    } else { 
-      
-    }
+    } else {}
   }
 }
 
@@ -76,7 +74,7 @@ class _MainPageState extends State<MainPage> {
     BottomNavigationBarItem(
       icon: ImageIcon(
         AssetImage("images/book_shelf.png"),
-        size: 26,
+        size: 21,
       ),
       label: '书架',
     ),
@@ -90,16 +88,10 @@ class _MainPageState extends State<MainPage> {
     BottomNavigationBarItem(
       icon: ImageIcon(
         AssetImage("images/video.png"),
-        size: 26,
+        size: 21,
       ),
       label: '美剧',
     ),
-    // BottomNavigationBarItem(
-    //   icon: ImageIcon(
-    //     AssetImage("images/video.png"),
-    //   ),
-    //   label: '美剧',
-    // ),
   ];
   imgIcon(String src, String title) {
     return BottomNavigationBarItem(
@@ -148,18 +140,21 @@ class _MainPageState extends State<MainPage> {
             ),
             key: q,
             body: PageView.builder(
-                //要点1
-                physics: NeverScrollableScrollPhysics(),
-                //禁止页面左右滑动切换
-                controller: _pageController,
-                onPageChanged: _pageChanged,
-                //回调函数
-                itemCount: _pages.length,
-                itemBuilder: (context, index) => _pages[index]),
+              //要点1
+              physics: NeverScrollableScrollPhysics(),
+              //禁止页面左右滑动切换
+              controller: _pageController,
+              onPageChanged: _pageChanged,
+              //回调函数
+              itemCount: _pages.length,
+              itemBuilder: (context, index) => _pages[index],
+            ),
             bottomNavigationBar: BottomNavigationBar(
               unselectedItemColor:
                   model.dark ? Colors.white : Color(0xFF1e1e1e),
               elevation: 0,
+              selectedFontSize: 12,
+              unselectedFontSize: 12,
               items: bottoms,
               type: BottomNavigationBarType.fixed,
               currentIndex: _tabIndex,

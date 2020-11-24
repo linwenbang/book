@@ -143,12 +143,13 @@ class VideoState extends State<Video> with AutomaticKeepAliveClientMixin {
 
   Widget item(String title, List<GBook> bks, String key) {
     return Container(
+      padding: EdgeInsets.only(left: 12, right: 12),
       child: ListView(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         children: <Widget>[
           SizedBox(
-            height: 5.0,
+            height: 12.0,
           ),
           Row(
             children: <Widget>[
@@ -189,6 +190,9 @@ class VideoState extends State<Video> with AutomaticKeepAliveClientMixin {
               )
             ],
           ),
+          SizedBox(
+            height: 12.0,
+          ),
           GridView(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
@@ -197,7 +201,7 @@ class VideoState extends State<Video> with AutomaticKeepAliveClientMixin {
                 crossAxisCount: 3,
                 mainAxisSpacing: 1.0,
                 crossAxisSpacing: 10.0,
-                childAspectRatio: 0.7),
+                childAspectRatio: 0.6),
             children: bks.map((i) => img(i)).toList(),
           )
         ],
@@ -215,13 +219,12 @@ class VideoState extends State<Video> with AutomaticKeepAliveClientMixin {
             width: (ScreenUtil.getScreenW(context) - 40) / 3,
             height: ((ScreenUtil.getScreenW(context) - 40) / 3) * 1.2,
           ),
-          Expanded(
-            child: Container(),
-          ),
+          SizedBox(height: 4),
           Text(
             gbk.name,
-            maxLines: 1,
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: 12),
           )
         ],
       ),

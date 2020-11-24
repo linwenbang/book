@@ -22,22 +22,12 @@ class GoodBook extends StatefulWidget {
 class StateGoodBook extends State<GoodBook>
     with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   TabController controller;
-  var tabs = <Tab>[];
+
   @override
   void initState() {
     super.initState();
-
-    tabs = [
-      Tab(
-        text: "男生",
-      ),
-      Tab(
-        text: "女生",
-      ),
-    ];
     //initialIndex初始选中第几个
-    controller =
-        TabController(initialIndex: 0, length: tabs.length, vsync: this);
+    controller = TabController(initialIndex: 0, length: 2, vsync: this);
   }
 
   @override
@@ -51,7 +41,7 @@ class StateGoodBook extends State<GoodBook>
     super.build(context);
     ColorModel value = Store.value<ColorModel>(context);
     return DefaultTabController(
-      length: tabs.length,
+      length: 2,
       child: Scaffold(
           appBar: AppBar(
             brightness: Brightness.light,
@@ -62,7 +52,22 @@ class StateGoodBook extends State<GoodBook>
               indicatorColor: Theme.of(context).primaryColor,
               indicatorSize: TabBarIndicatorSize.label,
               controller: controller,
-              tabs: tabs,
+              tabs: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: 4),
+                  child: Text(
+                    "男生",
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 4),
+                  child: Text(
+                    "女生",
+                    style: TextStyle(fontSize: 12),
+                  ),
+                ),
+              ],
               labelStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             centerTitle: true,
@@ -71,8 +76,7 @@ class StateGoodBook extends State<GoodBook>
           ),
           body: TabBarView(
             controller: controller,
-            children:
-                tabs.map((f) => TabItem(f.text == "男生" ? "1" : "2")).toList(),
+            children: [TabItem("1"), TabItem("2")],
           )),
     );
   }
@@ -82,7 +86,7 @@ class StateGoodBook extends State<GoodBook>
 }
 
 class TabItem extends StatefulWidget {
-  String type;
+  final String type;
 
   TabItem(this.type);
 
@@ -106,6 +110,7 @@ class StateTabItem extends State<TabItem>
 
   Widget item(String title, List<GBook> bks) {
     return Container(
+      padding: EdgeInsets.only(left: 12, right: 12),
       child: ListView(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
@@ -130,7 +135,7 @@ class StateTabItem extends State<TabItem>
               ),
               Text(
                 title,
-                style: TextStyle(fontSize: 16.0),
+                style: TextStyle(fontSize: 14.0),
               ),
               Expanded(
                 child: Container(),
@@ -140,7 +145,7 @@ class StateTabItem extends State<TabItem>
                   children: <Widget>[
                     Text(
                       "更多",
-                      style: TextStyle(color: Colors.grey, fontSize: 11.0),
+                      style: TextStyle(color: Colors.grey, fontSize: 12.0),
                     ),
                     Icon(
                       Icons.keyboard_arrow_right,
@@ -157,13 +162,13 @@ class StateTabItem extends State<TabItem>
           ),
           GridView(
             shrinkWrap: true,
-            physics: new NeverScrollableScrollPhysics(),
+            physics: NeverScrollableScrollPhysics(),
             padding: EdgeInsets.all(5.0),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
                 mainAxisSpacing: 1.0,
                 crossAxisSpacing: 10.0,
-                childAspectRatio: 0.6),
+                childAspectRatio: 0.5),
             children: bks.sublist(0, 8).map((item) => img(item)).toList(),
           )
         ],
@@ -172,38 +177,38 @@ class StateTabItem extends State<TabItem>
   }
 
   Widget img(GBook gbk) {
-    return Container(
-      child: Column(
-        children: <Widget>[
-          GestureDetector(
-            child: PicWidget(
-              gbk.cover,
-              width: (ScreenUtil.getScreenW(context) - 40) / 4,
-              height: ((ScreenUtil.getScreenW(context) - 40) / 4) * 1.2,
-            ),
-            onTap: () async {
-              String url = Common.two + '/${gbk.name}/${gbk.author}';
-              Response future = await Util(context).http().get(url);
-              var d = future.data['data'];
-              if (d == null) {
-                Routes.navigateTo(context, Routes.search, params: {
-                  "type": "book",
-                  "name": gbk.name,
-                });
-              } else {
-                BookInfo bookInfo = BookInfo.fromJson(d);
-                Routes.navigateTo(context, Routes.detail,
-                    params: {"detail": jsonEncode(bookInfo)});
-              }
-            },
+    return Column(
+      children: <Widget>[
+        GestureDetector(
+          child: PicWidget(
+            gbk.cover,
+            width: (ScreenUtil.getScreenW(context) - 40) / 4,
+            height: ((ScreenUtil.getScreenW(context) - 40) / 4) * 1.2,
           ),
-          Text(
-            gbk.name,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          )
-        ],
-      ),
+          onTap: () async {
+            String url = Common.two + '/${gbk.name}/${gbk.author}';
+            Response future = await Util(context).http().get(url);
+            var d = future.data['data'];
+            if (d == null) {
+              Routes.navigateTo(context, Routes.search, params: {
+                "type": "book",
+                "name": gbk.name,
+              });
+            } else {
+              BookInfo bookInfo = BookInfo.fromJson(d);
+              Routes.navigateTo(context, Routes.detail,
+                  params: {"detail": jsonEncode(bookInfo)});
+            }
+          },
+        ),
+        SizedBox(height: 4),
+        Text(
+          gbk.name,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(fontSize: 12),
+        )
+      ],
     );
   }
 

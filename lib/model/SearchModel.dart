@@ -62,7 +62,7 @@ class SearchModel with ChangeNotifier {
     if (temp == "") {
       temp = word;
     } else {
-      if (temp != word&&page<=1) {
+      if (temp != word && page <= 1) {
         page = 1;
       }
     }
@@ -144,77 +144,53 @@ class SearchModel with ChangeNotifier {
   List<Widget> getHistory() {
     List<Widget> wds = [];
     for (var value in searchHistory) {
-      wds.add(GestureDetector(
-        onTap: () {
-          word = value;
-          controller.text = value;
-          search(value);
-          notifyListeners();
-        },
-        child: ListTile(
-          leading: Icon(Icons.update),
-          title: Text(value),
-          trailing: IconButton(
-            icon: Icon(Icons.clear),
-            onPressed: () {
-              deleteHistoryItem(value);
-            },
+      wds.add(
+        GestureDetector(
+          onTap: () {
+            word = value;
+            controller.text = value;
+            search(value);
+            notifyListeners();
+          },
+          child: Padding(
+            padding: EdgeInsets.only(top: 6, bottom: 6),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.update,
+                  color: Colors.black38,
+                  size: 18,
+                ),
+                SizedBox(width: 12),
+                Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.black38,
+                  ),
+                ),
+                // IconButton(
+                //   padding: EdgeInsets.zero,
+                //   icon: Icon(Icons.clear),
+                //   onPressed: () {
+                //     deleteHistoryItem(value);
+                //   },
+                // ),
+                // ListTile(
+                //   leading: Icon(Icons.update),
+                //   title: Text(value),
+                //   trailing: IconButton(
+                //     icon: Icon(Icons.clear),
+                //     onPressed: () {
+                //       deleteHistoryItem(value);
+                //     },
+                //   ),
+                // ),
+              ],
+            ),
           ),
         ),
-//        child: Container(
-//          margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-//          decoration: BoxDecoration(
-//              color: colors[Random().nextInt(colors.length)],
-//              borderRadius: BorderRadius.all(Radius.circular(5))),
-//          child: Container(
-//            margin: EdgeInsets.all(8),
-//            child: Text(value),
-//          ),
-//        ),
-      ));
-//      wds.add(GestureDetector(
-//        onTap: () {
-//          word = value;
-//          controller.text = value;
-//          search(value);
-//          notifyListeners();
-//        },
-////        child: Card(
-////          shape: const RoundedRectangleBorder(
-////              borderRadius: BorderRadius.all(Radius.circular(14.0))),
-////          color: colors[Random().nextInt(colors.length)],
-////          child: ListTile(
-////            leading: Icon(Icons.history),
-////            title: Text(value),
-////            trailing: IconButton(
-////              icon: Icon(Icons.close),
-////              onPressed: () {
-////                searchHistory.remove(value);
-////                notifyListeners();
-////              },
-////            ),
-////          ),
-////        ),
-//        child: Container(
-//          decoration: BoxDecoration(
-//            border: Border.all(color: Colors.white, width: 1.0), //灰色的一层边框
-//            color: colors[Random().nextInt(colors.length)],
-//            borderRadius: BorderRadius.all(Radius.circular(25.0)),
-//          ),
-//          alignment: Alignment.center,
-//          width: 100,
-////          constraints: BoxConstraints(
-////            minWidth: 180,
-////          ),
-//          child: Center(
-//            child: Text(
-//              value,
-//              maxLines: 1,
-//              overflow: TextOverflow.ellipsis,
-//            ),
-//          ),
-//        ),
-//      ));
+      );
     }
 
     return wds;
@@ -281,8 +257,15 @@ class SearchModel with ChangeNotifier {
     List<HotBook> hbs = data.map((f) => HotBook.fromJson(f)).toList();
     for (var i = 0; i < hbs.length; i++) {
       hot.add(GestureDetector(
-        child: Chip(
-          label: Text(hbs[i].Name),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 12),
+          child: Chip(
+            backgroundColor: Colors.black12,
+            label: Text(
+              hbs[i].Name,
+              style: TextStyle(fontSize: 12),
+            ),
+          ),
         ),
         onTap: () async {
           String url = Common.detail + '/${hbs[i].Id}';
@@ -348,8 +331,15 @@ class SearchModel with ChangeNotifier {
     List<GBook> hbs = data.map((f) => GBook.fromJson(f)).toList();
     for (var i = 0; i < hbs.length; i++) {
       hot.add(GestureDetector(
-        child: Chip(
-          label: Text(hbs[i].name),
+        child: Padding(
+          padding: const EdgeInsets.only(right: 12),
+          child: Chip(
+            backgroundColor: Colors.black12,
+            label: Text(
+              hbs[i].name,
+              style: TextStyle(fontSize: 12),
+            ),
+          ),
         ),
         onTap: () async {
           Routes.navigateTo(context, Routes.vDetail,
@@ -376,6 +366,7 @@ class SearchModel with ChangeNotifier {
         child: Text(
           name,
           overflow: TextOverflow.ellipsis,
+          style: TextStyle(fontSize: 12),
         ),
       );
     });
