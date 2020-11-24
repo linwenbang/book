@@ -183,47 +183,12 @@ class _ReadBookState extends State<ReadBook> with WidgetsBindingObserver {
                                 ),
                               );
                             }),
-                      model.showMenu
-                          ? Menu(
-                              onBack: () {
-                                _onBack();
-                              },
-                            )
-                          : Container(),
-                      model.showMenu
-                          ? Positioned(
-                              child: reloadCurChapterWidget(),
-                              bottom: 250,
-                              right: 20,
-                            )
-                          : Container()
+                      model.showMenu ? Menu() : Container(),
                     ],
                   )
                 : Container();
           },
         ),
-      ),
-    );
-  }
-
-  Widget reloadCurChapterWidget() {
-    return Opacity(
-      opacity: 0.9,
-      child: GestureDetector(
-        child: Container(
-          width: 50,
-          height: 50,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: Colors.grey, borderRadius: BorderRadius.circular(25)),
-          child: Icon(
-            Icons.refresh,
-            color: Colors.white,
-          ),
-        ),
-        onTap: () {
-          readModel.reloadCurrentPage();
-        },
       ),
     );
   }

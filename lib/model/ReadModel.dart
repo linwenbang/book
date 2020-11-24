@@ -245,7 +245,7 @@ class ReadModel with ChangeNotifier {
     fillAllContent(notify: jump);
     if (isPage && jump) {
       int ix = prePage?.pageOffsets?.length ?? 0;
-      pageController.jumpToPage(ix);
+      pageController?.jumpToPage(ix);
     }
     Navigator.pop(context);
   }
@@ -309,13 +309,13 @@ class ReadModel with ChangeNotifier {
         prePage = null;
         fillAllContent();
         var p = curPage?.pageOffsets?.length ?? 0;
-        pageController.jumpToPage(p > 0 ? p - 1 : 0);
+        pageController?.jumpToPage(p > 0 ? p - 1 : 0);
         ReadPage temp = await loadChapter(book.cur - 1);
         if (tempCur == book.cur) {
           prePage = temp;
           fillAllContent();
           int ix = (prePage?.pageOffsets?.length ?? 0) + idx;
-          pageController.jumpToPage(ix);
+          pageController?.jumpToPage(ix);
         }
       }
     }
@@ -425,8 +425,6 @@ class ReadModel with ChangeNotifier {
     }
   }
 
-//  Color.fromRGBO(122, 122, 122, 1)
-
   modifyFont() {
     if (!font) {
       font = !font;
@@ -443,7 +441,6 @@ class ReadModel with ChangeNotifier {
       }
     }
     intiPageContent(book.cur, true);
-//    notifyListeners();
   }
 
   toggleShowMenu() {
@@ -508,14 +505,18 @@ class ReadModel with ChangeNotifier {
 
   Widget firstPage() {
     return Container(
-      padding: EdgeInsets.only(top: 100),
+      padding: EdgeInsets.only(top: 140),
       child: Center(
         child: Column(
           children: [
-            CachedNetworkImage(
-              imageUrl: book.Img,
-              width: 150,
-              height: 160,
+            ClipRRect(
+              child: CachedNetworkImage(
+                imageUrl: book.Img,
+                width: 80,
+                height: 110,
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.circular(8),
             ),
             SizedBox(
               height: 10,
@@ -523,8 +524,7 @@ class ReadModel with ChangeNotifier {
             Text(
               book.Name,
               style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
+                fontSize: 22,
               ),
               overflow: TextOverflow.clip,
             ),
@@ -535,7 +535,7 @@ class ReadModel with ChangeNotifier {
               book.Author,
               style: TextStyle(
                 fontWeight: FontWeight.w100,
-                fontSize: 10,
+                fontSize: 16,
               ),
             ),
             SizedBox(
@@ -547,7 +547,7 @@ class ReadModel with ChangeNotifier {
                 book.Desc,
                 style: TextStyle(
                   fontWeight: FontWeight.w100,
-                  fontSize: 11,
+                  fontSize: 14,
                 ),
               ),
             ),
@@ -612,8 +612,9 @@ class ReadModel with ChangeNotifier {
                               //     height: textLineHeight),
                               style: TextStyle(
                                 fontSize: 14 / Screen.textScaleFactor,
-                                color:
-                                    model.dark ? Colors.white30 : Color(0xFF1e1e1e),
+                                color: model.dark
+                                    ? Colors.white30
+                                    : Color(0xFF1e1e1e),
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),

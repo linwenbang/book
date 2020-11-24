@@ -16,9 +16,7 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 
 class Menu extends StatefulWidget {
-  final Function onBack;
-
-  const Menu({Key key, this.onBack}) : super(key: key);
+  const Menu({Key key}) : super(key: key);
   @override
   _MenuState createState() => _MenuState();
 }
@@ -361,15 +359,15 @@ class _MenuState extends State<Menu> {
   }
 
   Widget bottom() {
-    return Opacity(
-      opacity: 0.99999,
-      child: Container(
-        decoration: BoxDecoration(
-          color: _colorModel.dark ? Color(0xFF1e1e1e) : Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        ),
-        // height: 140,
-        width: double.infinity,
+    return Container(
+      decoration: BoxDecoration(
+        color: _colorModel.dark ? Color(0xFF1e1e1e) : Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      ),
+      // height: 140,
+      width: double.infinity,
+      child: SafeArea(
+        top: false,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -401,22 +399,38 @@ class _MenuState extends State<Menu> {
 
   _renderBar() {
     return Container(
-      color: _colorModel.dark ? Color(0xFF1e1e1e) : Colors.white,
+      // color: _colorModel.dark ? Color(0xFF1e1e1e) : Colors.white,
       child: SafeArea(
+          bottom: false,
           child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            color: _colorModel.dark ? Colors.white : Color(0xFF1e1e1e),
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              if (widget.onBack is Function) {
-                widget.onBack();
-              }
-            },
-          )
-        ],
-      )),
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GestureDetector(
+                child: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: Icon(
+                    Icons.arrow_back_ios,
+                    color: _colorModel.dark ? Colors.white : Colors.black38,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              GestureDetector(
+                child: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: Icon(
+                    Icons.refresh,
+                    color: _colorModel.dark ? Colors.white : Colors.black38,
+                  ),
+                ),
+                onTap: () {
+                  _readModel.reloadCurrentPage();
+                },
+              ),
+            ],
+          )),
     );
   }
 
